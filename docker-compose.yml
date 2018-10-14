@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:9
+    environment:
+      - POSTGRES_USER=comp424
+      - POSTGRES_DB=comp424
+      - POSTGRES_PASSWORD=senhuas-soldiers
+
+  web:
+    image: comp424-senhuas-soldiers-laravel
+    build:
+      context: .
+    command: bash -c "php artisan config:clear && php artisan serve --host=0.0.0.0 --port=8001"
+    ports:
+      - 8001:8001
+    volumes:
+      - .:/app
+    environment:
+      - DB_CONNECTION=pgsql
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_DATABASE=comp424
+      - DB_USERNAME=comp424
+      - DB_PASSWORD=senhuas-soldiers
+    depends_on:
+      - db
