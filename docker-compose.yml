@@ -8,11 +8,16 @@ services:
       - POSTGRES_DB=comp424
       - POSTGRES_PASSWORD=senhuas-soldiers
 
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - "1080:1080"
+
   web:
     image: comp424-senhuas-soldiers-laravel
     build:
       context: .
-    command: bash -c "php artisan config:clear && php artisan serve --host=0.0.0.0 --port=8001"
+    command: bash -c "/app/bin/wait-for-it db:5432 -- php artisan config:clear && php artisan cache:clear && php artisan migrate && php artisan serve --host=0.0.0.0 --port=8001"
     ports:
       - 8001:8001
     volumes:
