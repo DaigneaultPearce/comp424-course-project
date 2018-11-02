@@ -6,7 +6,6 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
-
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
@@ -62,6 +61,18 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="g-recaptcha" class="col-md-4 col-form-label text-md-right">{{__('ReCaptcha')}}</label>
+                            <div class="col-md-6">
+                                <div class="g-recaptcha" data-sitekey="6LfrOXgUAAAAAN9QrRi9voGDv6Oda-fbXTgzTPdR"></div>
+                                    @if ($errors->has('g-recaptcha-response'))
+                                        <span class="invalid-feedback" role="alert" style="display:inline;">
+                                            <strong>ReCaptcha must be completed to verify humanity.</strong>
+                                        </span>
+                                    @endif
+                            </div>
+                        </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
@@ -80,4 +91,5 @@
 
 <link rel="stylesheet" href="{{asset('css/meter.css')}}">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script src="{{asset('js/meter.js')}}"></script>
